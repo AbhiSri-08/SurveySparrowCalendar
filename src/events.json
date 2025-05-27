@@ -1,0 +1,39 @@
+[
+    {
+      "title": "Team Meeting",
+      "date": "2025-05-28",
+      "time": "10:00",
+      "duration": "1 hour"
+    },
+    {
+      "title": "Project Deadline",
+      "date": "2025-05-30",
+      "time": "17:00",
+      "duration": "2 hours"
+    },
+    {
+      "title": "Doctor Appointment",
+      "date": "2025-06-02",
+      "time": "09:30",
+      "duration": "30 minutes"
+    },
+    {
+      "title": "Client Call",
+      "date": "2025-06-02",
+      "time": "11:00",
+      "duration": "1 hour"
+    },
+    {
+      "title": "Workshop",
+      "date": "2025-06-05",
+      "time": "14:00",
+      "duration": "3 hours"
+    },
+    {
+      "title": "project Expo",
+      "date": "2025-07-06",
+      "time": "14:00",
+      "duration": "3 hours"
+    }
+  ]
+  
