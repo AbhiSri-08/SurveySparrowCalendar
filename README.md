@@ -1,57 +1,69 @@
-# Calendar Assignment
+# Calendar
 
-## Project Overview
-This is a **React-based calendar application** that offers multiple calendar views — Year, Month, and Week — allowing users to add, view, edit, and manage tasks/events. The app features a sidebar with navigation and user account details, task management with title and description, and persistent storage using `localStorage`. The design emphasizes a clean, minimal, and user-friendly interface inspired by popular calendar apps.
+## 🌐 Live Demo
+👉 [https://abhisri-08.github.io/Calendar/](https://abhisri-08.github.io/Calendar/)
 
-## Live Demo
-Check out the live app here: [https://abhisri-08.github.io/Calendar-Assignment/](https://abhisri-08.github.io/Calendar-Assignment/)
+## 📋 Project Overview
+This is a **React-based calendar application** that offers multiple calendar views — **Year, Month, and Week** — allowing users to add, view, edit, and manage tasks/events. It features a sidebar for navigation and user account display, persistent task storage, and a clean, user-friendly design.
 
-## Features
-- Multiple calendar views: Year, Month, and Week
-- Add, edit, and delete tasks with detailed descriptions
-- Persistent task storage via `localStorage`
-- Responsive layout for desktop and mobile screens
-- Sidebar with icons and hover tooltips for navigation
-- Highlighting of selected dates and tasks
-- Seamless toggle between calendar views
+## ✨ Features
+- 🗓 Multiple calendar views: Year, Month, and Week
+- 📝 Add, edit, and delete tasks with title and description
+- 💾 Persistent task storage using `localStorage`
+- 📱 Responsive design for desktop and mobile
+- 🎨 Colored event highlighting by type
+- 🧭 Sidebar with icons and tooltips
+- 🔄 Smooth navigation between views
+- 🔔 Upcoming events preview and date highlights
 
-## Technologies Used
-- React.js with JSX
-- JavaScript (ES6+)
-- Tailwind CSS
-- `localStorage` for saving tasks persistently
+## 🛠 Technologies Used
+- **React.js** with JSX
+- **Tailwind CSS**
+- **JavaScript (ES6+)**
+- **LocalStorage** (for persistent task data)
+- **Vite** for fast development and build
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
-- Node.js and npm installed (for running locally)
-- Git (optional, for cloning the repository)
+### ✅ Prerequisites
+- [Node.js](https://nodejs.org/) installed
+- Git (optional, for cloning)
 
-### Installation
+### 📦 Installation
+
 ```bash
-git clone https://github.com/abhisri-08/Calendar-Assignment.git
-cd Calendar-Assignment
+git clone https://github.com/AbhiSri-08/Calendar.git
+cd Calendar
 npm install
-npm start
-Then open your browser and navigate to http://localhost:3000.
+npm run dev
+Then open your browser at: http://localhost:5173 (default Vite port)
 
-###  Usage
-Navigate between Year, Month, and Week views using the sidebar or dropdown.
+🧭 Usage
+Toggle between Year, Month, and Week views using the sidebar or dropdown.
 
-Click on any date to add or view tasks for that day.
+Click any date to add/view/edit tasks.
 
-Tasks will be saved automatically and displayed on their respective dates.
+Tasks are saved locally and persist across sessions.
 
-Edit or delete tasks by selecting them.
+Hover on event tiles to see full descriptions.
 
-Use the sidebar icons to quickly switch views or access account details.
-Contribution
-Contributions, issues, and feature requests are welcome! Feel free to fork the repository and submit pull requests.
+Sidebar also shows account info and upcoming events.
+ Contribution
+Contributions and feature ideas are welcome!
+Fork this repo, make your changes, and submit a pull request.
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+📄 License
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
+yaml
+Copy
 ---
 
-You can copy this markdown directly into your `README.md` file in your repo. If you want, I can also help you format it nicely or add badges (like build status, license, or React version). Would you like that?
+### ✅ To use:
+1. Create or update your `README.md` in the `Calendar` repo.
+2. Paste the above content.
+3. Commit and push to GitHub.
 
+Let me know if you want me to add **badges** or improve visuals with screenshots!
+
+Edit
