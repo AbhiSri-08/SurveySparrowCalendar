@@ -137,27 +137,62 @@ const CalendarApp = () => {
     return <div className="grid grid-cols-7 p-2 border-b">{days}</div>;
   };
 
+  
+  const renderMiniMonth = (monthDate) => {
+    const monthStart = startOfMonth(monthDate);
+    const monthEnd = endOfMonth(monthStart);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
+  
+    const days = [];
+    let day = startDate;
+  
+    while (day <= endDate) {
+      const isCurrentMonth = isSameMonth(day, monthStart);
+      const isToday = isSameDay(day, new Date());
+      days.push(
+        <div
+          key={day.toString()}
+          className={`text-xs w-6 h-6 flex items-center justify-center rounded
+            ${isToday ? "bg-blue-300 text-white font-bold" : ""}
+            ${isCurrentMonth ? "text-gray-900" : "text-gray-400"}
+          `}
+        >
+          {format(day, "d")}
+        </div>
+      );
+      day = addDays(day, 1);
+    }
+  
+    return (
+      <div
+        className="border rounded p-1 cursor-pointer hover:bg-blue-100"
+        onClick={() => {
+          setView("month");
+          setCurrentDate(monthDate);
+          setYearViewMonth(monthDate);
+        }}
+      >
+        <div className="text-center font-semibold mb-1">{format(monthDate, "MMM")}</div>
+        <div className="grid grid-cols-7 gap-0.5">{days}</div>
+      </div>
+    );
+  };
+  
   const renderYearView = () => {
     const yearStart = startOfYear(currentDate);
     const months = [];
     for (let i = 0; i < 12; i++) {
       const monthDate = addMonths(yearStart, i);
       months.push(
-        <div
-          key={i}
-          className="cursor-pointer border p-2 rounded hover:bg-blue-100 text-center"
-          onClick={() => {
-            setView("month");
-            setCurrentDate(monthDate);
-            setYearViewMonth(monthDate);
-          }}
-        >
-          {format(monthDate, "MMM")}
+        <div key={i}>
+          {renderMiniMonth(monthDate)}
         </div>
       );
     }
     return <div className="grid grid-cols-4 gap-4 p-4">{months}</div>;
   };
+  
 
   const renderMonthView = (date) => {
     const monthStart = startOfMonth(date);
@@ -208,13 +243,14 @@ const CalendarApp = () => {
   const color = eventColors[idx % eventColors.length];
   return (
     <div
-      key={idx}
-      className="rounded px-1 mt-1 text-xs truncate"
-      style={{ backgroundColor: color, color: "white" }}
-      title={event.description} // Optional tooltip
-    >
-      {event.title}
-    </div>
+  key={idx}
+  className="rounded px-3 py-1 mt-2 text-xs truncate"
+  style={{ backgroundColor: event.color, color: "white" }}
+  title={event.description} // Optional tooltip
+>
+  {event.title}
+</div>
+
   );
 })}
 </div>
@@ -233,6 +269,7 @@ const CalendarApp = () => {
 
     return <div className="space-y-1">{rows}</div>;
   };
+
 
 const renderWeekView = (date) => {
   const start = startOfWeek(date);
@@ -273,13 +310,14 @@ const renderWeekView = (date) => {
           const color = eventColors[idx % eventColors.length];
           return (
             <div
-              key={idx}
-              className="rounded px-1 mt-1 text-xs truncate"
-              style={{ backgroundColor: color, color: "white" }}
-              title={event.description}
-            >
-              {event.title}
-            </div>
+  key={idx}
+  className="rounded px-3 py-1 mt-2 text-xs truncate"
+  style={{ backgroundColor: event.color, color: "white" }}
+  title={event.description} // Optional tooltip
+>
+  {event.title}
+</div>
+
           );
         })}
       </div>
@@ -290,6 +328,8 @@ const renderWeekView = (date) => {
 
   return <div className="grid grid-cols-7 gap-1 p-2">{days}</div>;
 };
+
+
 
   const renderModal = () =>
     showModal && (
@@ -424,4 +464,3 @@ const renderWeekView = (date) => {
 };
 
 export default CalendarApp;
-
