@@ -1,5 +1,5 @@
 {
-  "homepage": "https://abhisri-08.github.io/Calendar-Assignment",
+  "homepage": "https://abhisri-08.github.io/Calendar",
   "name": "calendar-app-v2",
   "private": true,
   "version": "0.0.0",
@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy":"gh-pages -d dist"
   },
   "dependencies": {
     "date-fns": "^4.1.0",

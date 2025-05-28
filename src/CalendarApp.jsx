@@ -137,31 +137,6 @@ const CalendarApp = () => {
     return <div className="grid grid-cols-7 p-2 border-b">{days}</div>;
   };
 
-<<<<<<< HEAD
-  // const renderYearView = () => {
-  //   const yearStart = startOfYear(currentDate);
-  //   const months = [];
-  //   for (let i = 0; i < 12; i++) {
-  //     const monthDate = addMonths(yearStart, i);
-  //     months.push(
-  //       <div
-  //         key={i}
-  //         className="cursor-pointer border p-2 rounded hover:bg-blue-100 text-center"
-  //         onClick={() => {
-  //           setView("month");
-  //           setCurrentDate(monthDate);
-  //           setYearViewMonth(monthDate);
-  //         }}
-  //       >
-  //         {format(monthDate, "MMM")}
-  //       </div>
-  //     );
-  //   }
-  //   return <div className="grid grid-cols-4 gap-4 p-4">{months}</div>;
-  // };
-=======
-  
->>>>>>> bd989c86ed58db819a731128889502848929c596
   const renderMiniMonth = (monthDate) => {
     const monthStart = startOfMonth(monthDate);
     const monthEnd = endOfMonth(monthStart);
