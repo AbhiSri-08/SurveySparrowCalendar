@@ -25,10 +25,6 @@ This is a **React-based calendar application** that offers multiple calendar vie
 
 ## 🚀 Getting Started
 
-### ✅ Prerequisites
-- [Node.js](https://nodejs.org/) installed
-- Git (optional, for cloning)
-
 ### 📦 Installation
 
 ```bash
