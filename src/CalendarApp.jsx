@@ -37,27 +37,6 @@ const defaultEvents = [
     "color": "#1E90FF"
   },
   {
-    "title": "Project Deadline",
-    "date": "2025-05-30",
-    "time": "17:00",
-    "duration": "2 hours",
-    "color": "#FF6347"
-  },
-  {
-    "title": "Doctor Appointment",
-    "date": "2025-06-02",
-    "time": "09:30",
-    "duration": "30 minutes",
-    "color": "#32CD32"
-  },
-  {
-    "title": "Client Call",
-    "date": "2025-06-02",
-    "time": "11:00",
-    "duration": "1 hour",
-    "color": "#FFA500"
-  },
-  {
     "title": "Workshop",
     "date": "2025-06-05",
     "time": "14:00",
