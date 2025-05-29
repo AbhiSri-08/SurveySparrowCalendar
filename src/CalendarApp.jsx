@@ -18,14 +18,125 @@ import {
 } from "date-fns";
 import { getDay } from "date-fns";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import eventsData from './events.json';
+
 const eventColors = [
-  "#FF5733", // red-orange
-  "#33C3FF", // blue
-  "#33FF57", // green
-  "#FF33A8", // pink
-  "#FFC300", // yellow
-  "#8E44AD", // purple
+  "#FF5733", 
+  "#33C3FF", 
+  "#33FF57", 
+  "#FF33A8", 
+  "#FFC300", 
+  "#8E44AD", 
+];
+
+const defaultEvents = [
+  {
+    "title": "Team Meeting",
+    "date": "2025-05-28",
+    "time": "10:00",
+    "duration": "1 hour",
+    "color": "#1E90FF"
+  },
+  {
+    "title": "Project Deadline",
+    "date": "2025-05-30",
+    "time": "17:00",
+    "duration": "2 hours",
+    "color": "#FF6347"
+  },
+  {
+    "title": "Doctor Appointment",
+    "date": "2025-06-02",
+    "time": "09:30",
+    "duration": "30 minutes",
+    "color": "#32CD32"
+  },
+  {
+    "title": "Client Call",
+    "date": "2025-06-02",
+    "time": "11:00",
+    "duration": "1 hour",
+    "color": "#FFA500"
+  },
+  {
+    "title": "Workshop",
+    "date": "2025-06-05",
+    "time": "14:00",
+    "duration": "3 hours",
+    "color": "#6A5ACD"
+  },
+  {
+    "title": "project Expo",
+    "date": "2025-07-06",
+    "time": "14:00",
+    "duration": "3 hours",
+    "color": "#FF69B4"
+  },
+  {
+    "title": "New Year Celebration",
+    "date": "2025-01-01",
+    "description": "Celebrate the new year!",
+    "color": "#FFD700"
+  },
+  {
+    "title": "Republic Day",
+    "date": "2025-01-26",
+    "description": "National holiday",
+    "color": "#FF4500"
+  },
+  {
+    "title": "Valentine's Day",
+    "date": "2025-02-14",
+    "description": "Celebrate love",
+    "color": "#FF1493"
+  },
+  {
+    "title": "Holi",
+    "date": "2025-03-10",
+    "description": "Festival of colors",
+    "color": "#8A2BE2"
+  },
+  {
+    "title": "Good Friday",
+    "date": "2025-04-18",
+    "description": "Christian holiday",
+    "color": "#A52A2A"
+  },
+  {
+    "title": "Labour Day",
+    "date": "2025-05-01",
+    "description": "International Workers' Day",
+    "color": "#808080"
+  },
+  {
+    "title": "Independence Day",
+    "date": "2025-08-15",
+    "description": "National holiday",
+    "color": "#228B22"
+  },
+  {
+    "title": "Ganesh Chaturthi",
+    "date": "2025-09-02",
+    "description": "Festival of Lord Ganesha",
+    "color": "#DAA520"
+  },
+  {
+    "title": "Dussehra",
+    "date": "2025-10-10",
+    "description": "Victory of good over evil",
+    "color": "#B22222"
+  },
+  {
+    "title": "Diwali",
+    "date": "2025-11-01",
+    "description": "Festival of lights",
+    "color": "#FFD700"
+  },
+  {
+    "title": "Christmas",
+    "date": "2025-12-25",
+    "description": "Christmas Day celebration",
+    "color": "#FF0000"
+  }
 ];
 
 const CalendarApp = () => {
@@ -37,32 +148,34 @@ const CalendarApp = () => {
   const [newEventDesc, setNewEventDesc] = useState("");
   const [view, setView] = useState("month"); // "year", "month", "week"
   const [yearViewMonth, setYearViewMonth] = useState(null);
- 
+  const [showAllEvents, setShowAllEvents] = useState(false);
+
   useEffect(() => {
-    fetch('/events.json')  // Make sure events.json is in your public folder or accessible path
-      .then(res => res.json())
-      .then(data => setEvents(data))
-      .catch(console.error);
-  }, []);
-  useEffect(() => {
-    const storedEvents = JSON.parse(localStorage.getItem("calendarEvents")) || [];
-    // Combine stored events with events from JSON (avoid duplicates if needed)
-   const combinedEvents = [...storedEvents];
-   // Add JSON events that are not in storedEvents
-  eventsData.forEach((e) => {
-    if (!storedEvents.find(ev => ev.date === e.date && ev.title === e.title)) {
-      combinedEvents.push(e);
+    // Load events from localStorage if available, else initialize with defaultEvents
+    const localEvents = JSON.parse(localStorage.getItem("calendarEvents")) || [];
+
+    if (localEvents.length === 0) {
+      // No events stored, so save defaultEvents to localStorage and set state
+      localStorage.setItem("calendarEvents", JSON.stringify(defaultEvents));
+      setEvents(defaultEvents);
+    } else {
+      // Merge local events with defaultEvents to avoid duplicates
+      const mergedEvents = [...localEvents];
+
+      defaultEvents.forEach((defaultEvent) => {
+        const exists = localEvents.some(
+          (localEvent) =>
+            localEvent.date === defaultEvent.date &&
+            localEvent.title === defaultEvent.title
+        );
+        if (!exists) {
+          mergedEvents.push(defaultEvent);
+        }
+      });
+
+      setEvents(mergedEvents);
     }
-  });
-
-  setEvents(combinedEvents);
-
   }, []);
-  
-
-  useEffect(() => {
-    localStorage.setItem("calendarEvents", JSON.stringify(events));
-  }, [events]);
 
   const handlePrev = () => {
     if (view === "year") {
@@ -91,12 +204,15 @@ const CalendarApp = () => {
 
   const handleEventSubmit = () => {
     if (!newEventTitle.trim()) return;
+    const color = eventColors[events.length % eventColors.length];
     const newEvent = {
       title: newEventTitle,
       description: newEventDesc,
       date: format(selectedDate, "yyyy-MM-dd"),
+      color:color,
     };
     const updatedEvents = [...events, newEvent];
+    localStorage.setItem("calendarEvents", JSON.stringify(updatedEvents));
     setEvents(updatedEvents);
     setNewEventTitle("");
     setNewEventDesc("");
@@ -122,6 +238,7 @@ const CalendarApp = () => {
       </div>
     </div>
   );
+
 
   const renderDays = () => {
     if (view === "year") return null;
@@ -198,6 +315,7 @@ const CalendarApp = () => {
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
+   
 
     const rows = [];
     let days = [];
@@ -209,51 +327,58 @@ const CalendarApp = () => {
         const cloneDay = day;
         const isCurrentMonth = isSameMonth(day, monthStart);
         const isToday = isSameDay(day, new Date());
+         const isSunday = getDay(day) === 0;
         const dayEvents = events.filter(
           (event) => event.date === format(day, "yyyy-MM-dd")
         );
+        const maxEventsToShow = 2;
+  const visibleEvents = dayEvents.slice(0, maxEventsToShow);
+  const remainingCount = dayEvents.length - visibleEvents.length;
 
-        // Fix bg colors - remove unconditional bg-white
-        days.push(
-          <div
-            key={day.toString()}
-              className={`p-2 h-24 border relative cursor-pointer text-sm transition rounded
-                ${isToday ? "bg-blue-100 border-4 border-blue-700" : ""}
-                ${!isToday && isCurrentMonth ? "bg-white" : ""}
-                ${!isCurrentMonth ? "bg-gray-200 text-gray-400" : ""}`}
-
-            onClick={() => handleDateClick(cloneDay)}
-          >
-            <div className="flex justify-between items-start">
-              <div
-            className={`w-6 h-6 flex items-center justify-center rounded-full
-              ${isToday ? "bg-blue-500 text-white font-bold border-2 border-blue-800" : ""}
-              ${getDay(day) === 0 ? "text-red-500" : ""}
-            `}
-            >
-  {formattedDate}
+      
+days.push(
+  <div
+    key={day.toString()}
+    className={`p-2 h-24 border relative cursor-pointer text-sm transition rounded 
+      ${isToday ? "bg-blue-100 border-blue-400 border-2" : ""}
+      ${isCurrentMonth ? "bg-white" : "bg-gray-100"}
+       ${isSunday ?"bbg-red-50" : ""}
+    `}
+    onClick={() => handleDateClick(cloneDay)}
+  >
+    <div className="text-xs font-medium text-right">
+  <span
+    className={`inline-flex items-center justify-center w-6 h-6 rounded-full 
+      ${isToday ? "border-2 border-blue-500 text-blue-600" : ""}
+      ${isSunday ? "text-red-600 font-bold" : ""} 
+    `}
+  >
+    {formattedDate}
+  </span>
 </div>
 
-              {dayEvents.length > 0 && (
-                <span className="w-2 h-2 mt-0.5 bg-blue-500 rounded-full" />
-              )}
-            </div>
-            {dayEvents.map((event, idx) => {
-  const color = eventColors[idx % eventColors.length];
-  return (
-    <div
-  key={idx}
-  className="rounded px-3 py-1 mt-2 text-xs truncate"
-  style={{ backgroundColor: event.color, color: "white" }}
-  title={event.description} // Optional tooltip
->
-  {event.title}
-</div>
-
-  );
-})}
-</div>
-        );
+    <div className="mt-1 space-y-0.5">
+      {visibleEvents.map((event, idx) => (
+        <div
+          key={idx}
+          className="truncate text-xs px-1 rounded"
+          style={{ backgroundColor: event.color, color: "white" }}
+        >
+          {event.title}
+        </div>
+      ))}
+      {remainingCount > 0 && (
+        <div className="text-xs text-blue-500 cursor-pointer" onClick={(e) => {
+          e.stopPropagation();
+          setSelectedDate(cloneDay);
+          setShowAllEvents(true);
+        }}>
+          +{remainingCount} more
+        </div>
+      )}
+    </div>
+  </div>
+);
 
         day = addDays(day, 1);
       }
@@ -306,7 +431,8 @@ const renderWeekView = (date) => {
           </div>
         </div>
         {dayEvents.map((event, idx) => {
-          const color = eventColors[idx % eventColors.length];
+          
+          console.log("Event:", event.title, "Color:", event.color);
           return (
             <div
   key={idx}
@@ -398,36 +524,28 @@ const renderWeekView = (date) => {
           <option value="week">Week</option>
         </select>
       </div>
-      {/* Upcoming Events Section */}
-      <div>
-        <h3 className="font-semibold mb-2">Upcoming Events</h3>
-        {events
-  .filter((e) => parseISO(e.date) >= new Date())
-  .sort((a, b) => new Date(a.date) - new Date(b.date))
-  .slice(0, 5)
-  .map((event, idx) => {
-    const eventDate = parseISO(event.date);
-    return (
-      <div
-        key={idx}
-        className="mb-2 text-sm cursor-pointer hover:bg-blue-100 rounded p-1"
-        onClick={() => {
-          setCurrentDate(eventDate);
-          setSelectedDate(eventDate);
-          setView("month"); // or "week" if you prefer
-          setYearViewMonth(null);/// reset year view month if any
-        
-        }}
 
-        title={`${event.title} - ${format(eventDate, "PPP")}`}
-      >
-        <div className="font-medium">{event.title}</div>
-        <div className="text-xs text-gray-500">{format(eventDate, "PPP")}</div>
-      </div>
-    );
-  })}
-
-      </div>
+<div>
+  <h3 className="font-semibold mb-2">Upcoming Events</h3>
+  {events
+    .filter((e) => parseISO(e.date) >= new Date())
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
+    .slice(0, 5)
+    .map((event, idx) => {
+      const color = eventColors[idx % eventColors.length];
+      return (
+        <div
+          key={idx}
+          className="rounded px-3 py-1 mb-1 text-xs truncate cursor-pointer"
+          style={{ backgroundColor: color, color: "white" }}
+          title={`${event.title}: ${event.description}`}
+          onClick={() => setCurrentDate(parseISO(event.date))}
+        >
+          {event.title} - {format(parseISO(event.date), "MMM d")}
+        </div>
+      );
+    })}
+</div>
 
     </div>
   );
@@ -437,6 +555,34 @@ const renderWeekView = (date) => {
       {renderSidebar()}
       <div className="flex-1 flex flex-col">
         {renderHeader()}
+        {showAllEvents && selectedDate && (
+  <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+    <div className="bg-white dark:bg-gray-800 p-4 rounded shadow max-w-sm w-full">
+      <h2 className="text-lg font-bold mb-2">
+        Events on {format(selectedDate, "PPP")}
+      </h2>
+      {events
+        .filter((event) => event.date === format(selectedDate, "yyyy-MM-dd"))
+        .map((event, idx) => (
+          <div
+            key={idx}
+            className="mb-2 p-2 rounded text-white"
+            style={{ backgroundColor: event.color }}
+          >
+            <strong>{event.title}</strong>
+            <div className="text-xs">{event.description || "No details"}</div>
+          </div>
+        ))}
+      <button
+        onClick={() => setShowAllEvents(false)}
+        className="mt-3 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
         {renderDays()}
 
         <main className="flex-1 overflow-auto p-4">
